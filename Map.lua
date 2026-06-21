@@ -64,11 +64,13 @@ local function createLabel(parent, x, y, text, color, scale)
     label:SetPoint("CENTER")
     label:SetText(text)
     label:SetTextColor(hexToRGB(color))
+    label:SetShadowColor(0, 0, 0, 1)
+    label:SetShadowOffset(1, -1)
     label:Show()
     frame.label = label
 
-    local font, _, flags = label:GetFont()
-    label:SetFont(font, 13 * addon.db.labelSize * scale, flags or "OUTLINE")
+    local font = label:GetFont()
+    label:SetFont(font, 13 * addon.db.labelSize * scale, "OUTLINE")
     if frame.texture then
         frame.texture:Hide()
     end

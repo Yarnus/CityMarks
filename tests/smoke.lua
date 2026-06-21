@@ -1,6 +1,10 @@
 local addon = {}
 local eventFrame
 local currentLocale = "enUS"
+local openedCategory
+local lastFontFlags
+local shadowColorSet = false
+local shadowOffsetSet = false
 
 function GetLocale()
     return currentLocale
@@ -54,6 +58,15 @@ local objectMethods = {
         rawset(self, "scripts", scripts)
         scripts[script] = handler
     end,
+    SetFont = function(_, _, _, flags)
+        lastFontFlags = flags
+    end,
+    SetShadowColor = function()
+        shadowColorSet = true
+    end,
+    SetShadowOffset = function()
+        shadowOffsetSet = true
+    end,
 }
 
 for _, method in ipairs({
@@ -65,7 +78,6 @@ for _, method in ipairs({
     "SetAllPoints",
     "SetBackdrop",
     "SetBackdropColor",
-    "SetFont",
     "SetFrameStrata",
     "SetHeight",
     "SetMinMaxValues",
@@ -123,10 +135,16 @@ function WorldMapFrame:GetCanvas()
 end
 
 Settings = {
-    OpenToCategory = noOp,
+    OpenToCategory = function(categoryID)
+        openedCategory = categoryID
+    end,
     RegisterAddOnCategory = noOp,
     RegisterCanvasLayoutCategory = function()
-        return {ID = 1}
+        return {
+            GetID = function()
+                return "CityMarks"
+            end,
+        }
     end,
 }
 
@@ -188,6 +206,13 @@ eventFrame.scripts.OnEvent()
 assert(CityMarksDB, "expected saved variables")
 assert(addon.settingsCategory, "expected settings category")
 assert(SlashCmdList.CITYMARKS, "expected settings slash command")
+assert(SLASH_CITYMARKS2 == "/cm", "expected /cm alias")
+
+SlashCmdList.CITYMARKS()
+assert(openedCategory == "CityMarks", "expected slash command to open settings")
 
 addon:RefreshMap()
+assert(lastFontFlags == "OUTLINE", "expected map labels to use an outline")
+assert(shadowColorSet, "expected map labels to use a shadow color")
+assert(shadowOffsetSet, "expected map labels to use a shadow offset")
 print("CityMarks smoke test passed")

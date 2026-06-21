@@ -144,7 +144,7 @@ function addon:InitializeSettings()
         self:RefreshMap()
     end)
 
-    local category = Settings.RegisterCanvasLayoutCategory(panel, self.L.ADDON_NAME)
+    local category = Settings.RegisterCanvasLayoutCategory(panel, self.L.ADDON_NAME, self.L.ADDON_NAME)
     Settings.RegisterAddOnCategory(category)
     self.settingsCategory = category
 end

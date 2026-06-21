@@ -56,8 +56,18 @@ end
 
 function addon:OpenSettings()
     if Settings and Settings.OpenToCategory and self.settingsCategory then
-        Settings.OpenToCategory(self.settingsCategory.ID)
+        local categoryID = self.settingsCategory.GetID and self.settingsCategory:GetID()
+            or self.settingsCategory.ID
+        if categoryID then
+            Settings.OpenToCategory(categoryID)
+        end
     end
+end
+
+SLASH_CITYMARKS1 = "/citymarks"
+SLASH_CITYMARKS2 = "/cm"
+SlashCmdList.CITYMARKS = function()
+    addon:OpenSettings()
 end
 
 local frame = CreateFrame("Frame")
@@ -69,10 +79,4 @@ frame:SetScript("OnEvent", function()
 
     addon:InitializeMap()
     addon:InitializeSettings()
-
-    SLASH_CITYMARKS1 = "/citymarks"
-    SLASH_CITYMARKS2 = "/cm"
-    SlashCmdList.CITYMARKS = function()
-        addon:OpenSettings()
-    end
 end)
