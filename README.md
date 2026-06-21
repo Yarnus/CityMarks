@@ -15,8 +15,8 @@ city maps.
 - English, Simplified Chinese, and Traditional Chinese
 - Account-wide settings
 
-Type `/citymarks` or `/cm` to open the settings panel. Commands do not mutate
-settings.
+Type `/citymarks`, `/cmarks`, or `/cm` to open the settings panel. Commands do
+not mutate settings.
 
 ## Installation
 

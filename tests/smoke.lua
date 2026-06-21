@@ -156,6 +156,20 @@ Settings = {
 GameTooltip = newObject()
 GameTooltip_Hide = noOp
 SlashCmdList = {}
+hash_SlashCmdList = {}
+ChatFrameUtil = {
+    ImportAllListsToHash = function()
+        for name, handler in pairs(SlashCmdList) do
+            local index = 1
+            local command = _G["SLASH_" .. name .. index]
+            while command do
+                hash_SlashCmdList[command:upper()] = handler
+                index = index + 1
+                command = _G["SLASH_" .. name .. index]
+            end
+        end
+    end,
+}
 
 function hooksecurefunc()
 end
@@ -173,6 +187,11 @@ loadAddonFile("Data.lua")
 loadAddonFile("Core.lua")
 loadAddonFile("Map.lua")
 loadAddonFile("Settings.lua")
+
+SLASH_OTHER1 = "/cm"
+SlashCmdList.OTHER = function()
+    error("conflicting /cm command was called")
+end
 
 assert(#addon.CityOrder == 7, "expected seven supported cities")
 assert(addon.Cities[2393], "expected Silvermoon data")
@@ -211,9 +230,11 @@ eventFrame.scripts.OnEvent()
 assert(CityMarksDB, "expected saved variables")
 assert(addon.settingsCategory, "expected settings category")
 assert(SlashCmdList.CITYMARKS, "expected settings slash command")
-assert(SLASH_CITYMARKS2 == "/cm", "expected /cm alias")
+assert(SLASH_CITYMARKS2 == "/cmarks", "expected unique short alias")
+assert(SLASH_CITYMARKS3 == "/cm", "expected /cm alias")
+assert(hash_SlashCmdList["/CM"] == SlashCmdList.CITYMARKS, "expected /cm in the live command routing table")
 
-SlashCmdList.CITYMARKS()
+hash_SlashCmdList["/CM"]()
 assert(openedCategory == "CityMarks", "expected slash command to open settings")
 
 addon:RefreshMap()

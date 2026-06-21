@@ -6,7 +6,7 @@
 ## Notes-zhCN: 在支持的城市地图上显示轻量的服务标签和图标。
 ## Notes-zhTW: 在支援的城市地圖上顯示輕量的服務標籤和圖示。
 ## Author: Yarnus
-## Version: 1.0.3
+## Version: 1.0.4
 ## SavedVariables: CityMarksDB
 ## IconTexture: Interface\Icons\INV_Misc_Map02
 

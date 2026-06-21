@@ -60,15 +60,36 @@ function addon:OpenSettings()
             or self.settingsCategory.ID
         if categoryID then
             Settings.OpenToCategory(categoryID)
+            return true
         end
+    end
+    return false
+end
+
+local function handleSlashCommand()
+    if not addon:OpenSettings() then
+        print("|cffff4040CityMarks:|r Settings are not ready. Please try again after login.")
     end
 end
 
-SLASH_CITYMARKS1 = "/citymarks"
-SLASH_CITYMARKS2 = "/cm"
-SlashCmdList.CITYMARKS = function()
-    addon:OpenSettings()
+function addon:RegisterSlashCommands(refreshRoutes)
+    SLASH_CITYMARKS1 = "/citymarks"
+    SLASH_CITYMARKS2 = "/cmarks"
+    SLASH_CITYMARKS3 = "/cm"
+    SlashCmdList.CITYMARKS = handleSlashCommand
+
+    if refreshRoutes and ChatFrameUtil and ChatFrameUtil.ImportAllListsToHash then
+        ChatFrameUtil.ImportAllListsToHash()
+    end
+
+    if hash_SlashCmdList then
+        hash_SlashCmdList["/CITYMARKS"] = handleSlashCommand
+        hash_SlashCmdList["/CMARKS"] = handleSlashCommand
+        hash_SlashCmdList["/CM"] = handleSlashCommand
+    end
 end
+
+addon:RegisterSlashCommands()
 
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("PLAYER_LOGIN")
@@ -79,4 +100,5 @@ frame:SetScript("OnEvent", function()
 
     addon:InitializeMap()
     addon:InitializeSettings()
+    addon:RegisterSlashCommands(true)
 end)
