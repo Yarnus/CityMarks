@@ -2,6 +2,13 @@ local _, addon = ...
 
 local controls = {}
 
+local function setButtonText(button, text)
+    local label = button.Text or button.text
+    if label then
+        label:SetText(text)
+    end
+end
+
 local function addLabel(parent, text, template, x, y)
     local label = parent:CreateFontString(nil, "ARTWORK", template or "GameFontNormal")
     label:SetPoint("TOPLEFT", x, y)
@@ -12,7 +19,7 @@ end
 local function addCheckbox(parent, text, x, y, getValue, setValue)
     local button = CreateFrame("CheckButton", nil, parent, "UICheckButtonTemplate")
     button:SetPoint("TOPLEFT", x, y)
-    button.Text:SetText(text)
+    setButtonText(button, text)
     button:SetScript("OnClick", function(self)
         setValue(self:GetChecked() and true or false)
         addon:RefreshMap()
@@ -57,7 +64,7 @@ end
 local function addRadio(parent, text, value, x, y)
     local button = CreateFrame("CheckButton", nil, parent, "UIRadioButtonTemplate")
     button:SetPoint("TOPLEFT", x, y)
-    button.Text:SetText(text)
+    setButtonText(button, text)
     button:SetScript("OnClick", function()
         addon.db.displayMode = value
         for _, control in ipairs(controls) do

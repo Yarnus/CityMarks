@@ -35,6 +35,7 @@ consumer boundary and no external libraries are required.
 
 ## Changelog
 
+- 1.0.3: Fixed settings labels for the WoW 12.0.7 radio-button template.
 - 1.0.2: Fixed settings slash commands and improved map-label contrast.
 - 1.0.1: Split localization strings into one file per language.
 - 1.0.0: Initial independent implementation for WoW 12.0.7.

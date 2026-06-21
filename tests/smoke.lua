@@ -106,7 +106,6 @@ local objectMeta = {
 
 local function newObject()
     local object = setmetatable({}, objectMeta)
-    object.Text = setmetatable({}, objectMeta)
     return object
 end
 
@@ -114,6 +113,12 @@ function CreateFrame(_, name, _, template)
     local frame = newObject()
     frame.CreateFontString = newObject
     frame.CreateTexture = newObject
+
+    if template == "UICheckButtonTemplate" then
+        frame.Text = newObject()
+    elseif template == "UIRadioButtonTemplate" then
+        frame.text = newObject()
+    end
 
     if template == "OptionsSliderTemplate" and name then
         _G[name .. "Text"] = newObject()
