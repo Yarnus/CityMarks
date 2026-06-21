@@ -1,0 +1,33 @@
+# Architecture
+
+```text
+CityMarks/
+├── CityMarks.toc
+├── Locale.lua
+├── Data.lua
+├── Core.lua
+├── Map.lua
+├── Settings.lua
+├── tests/
+│   └── smoke.lua
+└── docs/
+    └── architecture.md
+```
+
+- `Locale.lua`: English, Simplified Chinese, and Traditional Chinese strings.
+- `Data.lua`: Supported cities and static service coordinates.
+- `Core.lua`: Saved-variable defaults, profession detection, and startup.
+- `Map.lua`: Map rendering, grouping, filtering, and map controls.
+- `Settings.lua`: Native Blizzard AddOns settings panel.
+- `tests/smoke.lua`: Minimal mocked WoW runtime smoke test.
+
+`Data.lua` contains no UI logic. `Map.lua` reads data and configuration but does
+not own saved-variable initialization. `Settings.lua` mutates configuration
+through the shared addon namespace and requests a map refresh.
+
+The addon uses a small file-based design because each responsibility has one
+consumer boundary and no external libraries are required.
+
+## Changelog
+
+- 1.0.0: Initial independent implementation for WoW 12.0.7.

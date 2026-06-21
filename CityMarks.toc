@@ -1,0 +1,17 @@
+## Interface: 120007
+## Title: CityMarks
+## Title-zhCN: 城市标记
+## Title-zhTW: 城市標記
+## Notes: Adds lightweight service labels and icons to supported city maps.
+## Notes-zhCN: 在支持的城市地图上显示轻量的服务标签和图标。
+## Notes-zhTW: 在支援的城市地圖上顯示輕量的服務標籤和圖示。
+## Author: Yarnus
+## Version: 1.0.0
+## SavedVariables: CityMarksDB
+## IconTexture: Interface\Icons\INV_Misc_Map02
+
+Locale.lua
+Data.lua
+Core.lua
+Map.lua
+Settings.lua
