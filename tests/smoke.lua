@@ -143,6 +143,9 @@ local function loadAddonFile(path)
 end
 
 loadAddonFile("Locale.lua")
+loadAddonFile("Locales/enUS.lua")
+loadAddonFile("Locales/zhCN.lua")
+loadAddonFile("Locales/zhTW.lua")
 loadAddonFile("Data.lua")
 loadAddonFile("Core.lua")
 loadAddonFile("Map.lua")
@@ -152,12 +155,26 @@ assert(#addon.CityOrder == 7, "expected seven supported cities")
 assert(addon.Cities[2393], "expected Silvermoon data")
 assert(addon.L.SETTINGS == "Settings", "expected English locale")
 
+local expectedNames = {
+    enUS = "CityMarks",
+    zhCN = "城市标记",
+    zhTW = "城市標記",
+}
+
 for _, locale in ipairs({"enUS", "zhCN", "zhTW"}) do
     currentLocale = locale
     local localizedAddon = {}
-    local chunk = assert(loadfile("Locale.lua"))
-    chunk("CityMarks", localizedAddon)
+    for _, path in ipairs({
+        "Locale.lua",
+        "Locales/enUS.lua",
+        "Locales/zhCN.lua",
+        "Locales/zhTW.lua",
+    }) do
+        local chunk = assert(loadfile(path))
+        chunk("CityMarks", localizedAddon)
+    end
 
+    assert(localizedAddon.L.ADDON_NAME == expectedNames[locale], locale .. " was not selected")
     for _, city in pairs(addon.Cities) do
         assert(localizedAddon.L[city.name], locale .. " is missing city key " .. city.name)
         for _, marker in ipairs(city.markers) do

@@ -4,6 +4,10 @@
 CityMarks/
 ├── CityMarks.toc
 ├── Locale.lua
+├── Locales/
+│   ├── enUS.lua
+│   ├── zhCN.lua
+│   └── zhTW.lua
 ├── Data.lua
 ├── Core.lua
 ├── Map.lua
@@ -14,7 +18,8 @@ CityMarks/
     └── architecture.md
 ```
 
-- `Locale.lua`: English, Simplified Chinese, and Traditional Chinese strings.
+- `Locale.lua`: Locale registration and English fallback handling.
+- `Locales/`: One text file per supported language.
 - `Data.lua`: Supported cities and static service coordinates.
 - `Core.lua`: Saved-variable defaults, profession detection, and startup.
 - `Map.lua`: Map rendering, grouping, filtering, and map controls.
@@ -30,4 +35,5 @@ consumer boundary and no external libraries are required.
 
 ## Changelog
 
+- 1.0.1: Split localization strings into one file per language.
 - 1.0.0: Initial independent implementation for WoW 12.0.7.
